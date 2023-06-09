@@ -54,10 +54,11 @@ const getDatafromLS=()=>{
       setImage('');
     };
 
-    const handleEdit = (e) => {
+    // edit button section
+    const handleEdit = () => {
       let data = JSON.parse(localStorage.getItem('employees'));
 
-      data = data.map((value) => {
+      data = employees.map((value) => {
         if (value.employees === props.employees) {
             return {
               ...value,
@@ -73,8 +74,8 @@ const getDatafromLS=()=>{
             return value;
         });
 
-        localStorage.setItem('employees', JSON.stringify(data));
-        props.updateList(data);
+        localStorage.setItem('employees', JSON.stringify(employees));
+        props.updateList(employees);
       };
 
       const handleEditSubmit = (e) => {
