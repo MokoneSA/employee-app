@@ -47,11 +47,12 @@
 
 .wrapper .form-container{
     width: 800px;
-    height: 600px;
+    height: 700px;
     background-color: #e4e4e4;
     margin: 20px auto;
     padding: 20px;
     display: flex;
+    border-radius: 15px;
     justify-content: center;
 }
 
@@ -60,7 +61,7 @@
 }
 
 .wrapper .view-container{
-    width: 800px;    
+    width: 900px;    
     background-color: #e4e4e4;
     margin: 20px auto;
     padding: 20px;
@@ -69,8 +70,19 @@
 }
 
 .btn-submit {
+    border-radius: 5px;
+    color: #fff;
     width: 100%;
     background-color: grey;
+}
+
+
+.table th {
+    font-size: 13px;
+}
+
+.edit-btn {
+    color: blue;
 }
 
 .delete-btn{
@@ -79,7 +91,7 @@
 }
 
 .btn-remove-all {
-    width: 400px;
+    width: 65%;
     color: red;
     background-color: grey;
 }
@@ -89,9 +101,10 @@ tbody{
 }
 
 .view-container {
-    width: 800px;
+    width: 900px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    border-radius: 15px;
 }

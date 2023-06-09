@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { View } from "./View";
+import { View } from '../components/View';
 
 // getting the values of local storage
 const getDatafromLS=()=>{
@@ -18,7 +18,7 @@ const getDatafromLS=()=>{
   }
 
 
-const EmployeeForm = () => {
+    const EmployeeForm = () => {
   
     const [employees, setEmployees]=useState(getDatafromLS());
   
@@ -28,8 +28,9 @@ const EmployeeForm = () => {
     const [position, setPosition] = useState('');
     const [contact, setContact] = useState('');
     const [email, setEmail] = useState('');
+    const [image, setImage] = useState('');
     
-  
+    // submit button section
     const handleAddEmployeeSubmit=(e)=>{
       e.preventDefault();
   
@@ -39,8 +40,9 @@ const EmployeeForm = () => {
         idnumber,
         position,
         contact,
-        email
-      }
+        email,
+        image
+      };
   
       setEmployees([...employees,employee]);
       setName('');
@@ -49,18 +51,51 @@ const EmployeeForm = () => {
       setPosition('');
       setContact('');
       setEmail('');
-    }
-  
+      setImage('');
+    };
+
+    const handleEdit = (e) => {
+      let data = JSON.parse(localStorage.getItem('employees'));
+
+      data = data.map((value) => {
+        if (value.employees === props.employees) {
+            return {
+              ...value,
+              name: name,
+              surname: surname,
+              idnumber: idnumber,
+              position: position,
+              contact: contact,
+              email: email,
+              image: image,
+            };
+          }
+            return value;
+        });
+
+        localStorage.setItem('employees', JSON.stringify(data));
+        props.updateList(data);
+      };
+
+      const handleEditSubmit = (e) => {
+        e.preventDefault();
+
+        let items = [...employees];
+        setEmployees(items);
+      };
+
+    // delete button section
     const deleteEmployee=(name)=>{
       const filteredEmployees=employees.filter((element,index)=>{
         return element.name !== name
       })
       setEmployees(filteredEmployees);
-    }
+    };
   
+    // saving to local storage
     useEffect(()=>{
       localStorage.setItem('employees',JSON.stringify(employees));
-    },[employees])
+    },[employees]);
   
     return (
       <div className='wrapper'>
@@ -95,6 +130,11 @@ const EmployeeForm = () => {
               <input type="email" className='form-control' required
               onChange={(e)=>setEmail(e.target.value)} value={email}></input>
               <br></br>
+
+              <label>Upload Image:</label>
+              <input type="file" className='form-control' required onChange={(e)=>setImage(e.target.value)} value={image}></input>
+              <br></br>
+
               <button type="submit" className='btn-submit'>
                 ADD
               </button>
@@ -113,23 +153,25 @@ const EmployeeForm = () => {
                       <th>Email</th>
                       <th>Position</th>
                       <th>Contact</th>
-                      <th>Delete</th>
+                      <th>Image</th>
+                      <th>Modify</th>
+                      <th>Remove</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <View employees={employees} deleteEmployee={deleteEmployee}/>
+                    <View employees={employees} deleteEmployee={deleteEmployee} handleEdit={handleEditSubmit}/>
                   </tbody>
                 </table>
               </div>
-              <button className='btn-remove-all'
-              onClick={()=>setEmployees([])}>Remove All</button>
+              <button className='btn-remove-all'onClick={()=>setEmployees([])}>
+                Remove All</button>
             </>}
             {employees.length < 1 && <div className='employeeList'>No employees on the database</div>}
           </div>
   
         </div>
       </div>
-    )
+    );
 }
  
 export default EmployeeForm;
