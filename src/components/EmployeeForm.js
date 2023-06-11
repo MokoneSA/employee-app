@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { View } from '../components/View';
+import Search from './Search';
 
 // getting the values of local storage
 const getDatafromLS=()=>{
@@ -30,6 +31,7 @@ const getDatafromLS=()=>{
     const [email, setEmail] = useState('');
     const [image, setImage] = useState('');
     
+    
     // submit button section
     const handleAddEmployeeSubmit=(e)=>{
       e.preventDefault();
@@ -55,7 +57,7 @@ const getDatafromLS=()=>{
     };
 
     // edit button section
-    const handleEdit = () => {
+    const handleEdit = (props) => {
       let data = JSON.parse(localStorage.getItem('employees'));
 
       data = employees.map((value) => {
@@ -84,6 +86,32 @@ const getDatafromLS=()=>{
         let items = [...employees];
         setEmployees(items);
       };
+    
+      
+      // search button section
+      const [searchQuery, setSearchQuery] = useState('');
+      
+      useEffect(() => {
+        // Fetch employees based on the search query
+        const fetchEmployees = async () => {
+          try {
+            const response = await employees.get(
+              `employees=${searchQuery}`
+            );
+            setEmployees(response.data);
+          } catch (error) {
+            console.error('Error fetching employees:', error);
+          }
+        };
+    
+        fetchEmployees();
+      }, [searchQuery]);
+    
+      const handleSearch = query => {
+        setSearchQuery(query);
+      };
+
+
 
     // delete button section
     const deleteEmployee=(name)=>{
@@ -135,7 +163,7 @@ const getDatafromLS=()=>{
               <label>Upload Image:</label>
               <input type="file" className='form-control' required onChange={(e)=>setImage(e.target.value)} value={image}></input>
               <br></br>
-
+              
               <button type="submit" className='btn-submit'>
                 ADD
               </button>
@@ -145,6 +173,7 @@ const getDatafromLS=()=>{
           <div className='view-container'>
             {employees.length>0&&<>
               <div className='table-responsive'>
+                <Search onSearch={handleSearch} />
                 <table className='table'>
                   <thead>
                     <tr>

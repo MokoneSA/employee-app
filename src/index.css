@@ -108,3 +108,16 @@ tbody{
     align-items: center;
     border-radius: 15px;
 }
+
+
+.search-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-bar input {
+    width: 600px;
+}
+

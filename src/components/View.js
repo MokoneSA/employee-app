@@ -1,6 +1,7 @@
 import React from 'react'
+import Search from './Search'
 
-export const View = ({ employees, deleteEmployee, handleEdit}) => {
+export const View = ({ employees, deleteEmployee, handleEdit, handleSearch}) => {
     
     return (
         <>
@@ -15,7 +16,7 @@ export const View = ({ employees, deleteEmployee, handleEdit}) => {
                         <td>{employee.image}</td>
                         <td className='edit-btn'  onClick={()=>handleEdit(employee.name)}>EDIT</td>
                         <td className='delete-btn' onClick={()=>deleteEmployee(employee.name)}>DELETE</td>           
-                    </tr>         
+                    </tr>    
             ))
         }
         </>
