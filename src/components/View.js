@@ -1,22 +1,21 @@
 import React from 'react'
-import Search from './Search'
 
-export const View = ({ employees, deleteEmployee, handleEdit, handleSearch}) => {
+export const View = ({ employees, deleteEmployee, handleEditSubmit}) => {
     
     return (
         <>
         {employees.map((employee) => (
-                    <tr key={employee.name}>
-                        <td>{employee.name}</td>
-                        <td>{employee.surname}</td>
-                        <td>{employee.idnumber}</td>
-                        <td>{employee.email}</td>
-                        <td>{employee.position}</td>
-                        <td>{employee.contact}</td>
-                        <td>{employee.image}</td>
-                        <td className='edit-btn'  onClick={()=>handleEdit(employee.name)}>EDIT</td>
-                        <td className='delete-btn' onClick={()=>deleteEmployee(employee.name)}>DELETE</td>           
-                    </tr>    
+                <tr>
+                    <td>{employee.name}</td>
+                    <td>{employee.surname}</td>
+                    <td>{employee.idnumber}</td>
+                    <td>{employee.email}</td>
+                    <td>{employee.position}</td>
+                    <td>{employee.contact}</td>
+                    <td>{employee.file}</td>
+                    <td> <button className='edit-btn'  onClick={()=>handleEditSubmit(employee)}>EDIT</button></td>
+                    <td><button className='delete-btn' onClick={()=>deleteEmployee(employee.index)}>DELETE</button></td>           
+                </tr>    
             ))
         }
         </>
